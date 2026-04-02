@@ -5,19 +5,19 @@ This project fulfills the IT4020 Microservices Architecture assignment. It simul
 
 ## Group Contribution
 
-### **Member 1: Patient Service (Port 8001)**
+### **IT22101624: Patient Service (Port 8001)**
 - Manages Patient Accounts, demographics, and contact info.
 - Endpoints: `/api/patients`
 
-### **Member 2: Doctor Service (Port 8002)**
+### **IT22117014: Doctor Service (Port 8002)**
 - Manages Staff Physicians, specializations, and consultation charges.
 - Endpoints: `/api/doctors`
 
-### **Member 3: Appointment Service (Port 8003)**
+### **IT22109576: Appointment Service (Port 8003)**
 - Links Patients to Doctors on specific dates and time slots.
 - Endpoints: `/api/appointments`
 
-### **Member 4: Billing Service (Port 8004)**
+### **IT22114662: Billing Service (Port 8004)**
 - Issues financial invoices for completed consultations and checks payment status.
 - Endpoints: `/api/bills`
 

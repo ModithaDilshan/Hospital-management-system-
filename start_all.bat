@@ -4,7 +4,7 @@ echo   Grand City Hospital System - Microservice Startup
 echo ==================================================
 echo.
 echo [0/6] Verifying Dependencies...
-for %%D in (Member1_PatientService Member2_DoctorService Member3_AppointmentService Member4_BillingService Member5_PharmacyService api_gateway) do (
+for %%D in (IT22101624_PatientService IT22117014_DoctorService IT22109576_AppointmentService IT22114662_BillingService Member5_PharmacyService api_gateway) do (
     if not exist "%~dp0%%D\node_modules" (
         echo --------------------------------------------------
         echo ⏳ Installing missing dependencies for %%D ...
@@ -15,20 +15,20 @@ for %%D in (Member1_PatientService Member2_DoctorService Member3_AppointmentServ
 )
 echo ✅ All dependencies ready!
 echo.
-echo [1/6] Starting Member 1 - Patient Service (Port 8001)...
-start "Member1 - Patient Service :8001" cmd /k "cd /d %~dp0Member1_PatientService && node index.js"
+echo [1/6] Starting IT22101624 - Patient Service (Port 8001)...
+start "Member1 - Patient Service :8001" cmd /k "cd /d %~dp0IT22101624_PatientService && node index.js"
 timeout /t 2 /nobreak >nul
 
-echo [2/6] Starting Member 2 - Doctor Service (Port 8002)...
-start "Member2 - Doctor Service :8002" cmd /k "cd /d %~dp0Member2_DoctorService && node index.js"
+echo [2/6] Starting IT22117014 - Doctor Service (Port 8002)...
+start "Member2 - Doctor Service :8002" cmd /k "cd /d %~dp0IT22117014_DoctorService && node index.js"
 timeout /t 2 /nobreak >nul
 
-echo [3/6] Starting Member 3 - Appointment Service (Port 8003)...
-start "Member3 - Appointment Service :8003" cmd /k "cd /d %~dp0Member3_AppointmentService && node index.js"
+echo [3/6] Starting IT22109576 - Appointment Service (Port 8003)...
+start "Member3 - Appointment Service :8003" cmd /k "cd /d %~dp0IT22109576_AppointmentService && node index.js"
 timeout /t 2 /nobreak >nul
 
-echo [4/6] Starting Member 4 - Billing Service (Port 8004)...
-start "Member4 - Billing Service :8004" cmd /k "cd /d %~dp0Member4_BillingService && node index.js"
+echo [4/6] Starting IT22114662 - Billing Service (Port 8004)...
+start "Member4 - Billing Service :8004" cmd /k "cd /d %~dp0IT22114662_BillingService && node index.js"
 timeout /t 2 /nobreak >nul
 
 echo [5/6] Starting Member 5 - Pharmacy Service (Port 8005)...

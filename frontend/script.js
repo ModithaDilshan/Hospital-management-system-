@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('aptDate').min = today;
     }
 
-    // Fetch doctors to populate the dropdown and showcase section
+    // Fetch dropdowns and showcase section
     fetchDoctorsForDropdown(); // dropdowns
+    fetchMedicinesForDropdown(); // pharmacy dropdown
     fetchAndRenderDoctors();   // homepage grid
 
     checkHealth();
@@ -29,6 +30,26 @@ async function fetchDoctorsForDropdown() {
             });
         }
     } catch (e) { console.log("Doctors not loaded for UI dropdown"); }
+}
+
+async function fetchMedicinesForDropdown() {
+    const sel = document.getElementById('phaMedSelect');
+    if (!sel) return;
+    try {
+        const res = await fetch(`${GATEWAY_URL}/medicines`);
+        const json = await res.json();
+        if (res.ok && json.data) {
+            sel.innerHTML = '<option value="">-- Choose Medication --</option>';
+            json.data.forEach(med => {
+                if (med.stockQuantity > 0) {
+                    const opt = document.createElement('option');
+                    opt.value = `${med._id}|${med.medicineName}|${med.pricePerUnit}`;
+                    opt.innerText = `${med.medicineName} (${med.stockQuantity} in stock) - LKR ${med.pricePerUnit}/unit`;
+                    sel.appendChild(opt);
+                }
+            });
+        }
+    } catch (e) { console.log("Medicines not loaded for UI dropdown"); }
 }
 
 async function fetchAndRenderDoctors() {
@@ -209,6 +230,55 @@ async function submitBill(e) {
 }
 
 // ------------------------------------
+// PHARMACY ORDER
+// ------------------------------------
+async function submitPharmacyOrder(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.disabled = true; btn.innerText = "Requesting...";
+
+    const medSelect = document.getElementById('phaMedSelect').value;
+    if (!medSelect) {
+        showMsg('phaRes', false, "Please select a Medication!");
+        btn.disabled = false; btn.innerText = "Request Medication";
+        return;
+    }
+
+    const [medId, medName, medPrice] = medSelect.split('|');
+    const qty = parseInt(document.getElementById('phaMedQty').value);
+    const total = qty * parseFloat(medPrice);
+
+    try {
+        // Technically a user ordering medication should POST to an Orders table, but to demonstrate PUT (Update Inventory) for the assignment:
+        const fetchRes = await fetch(`${GATEWAY_URL}/medicines/${medId}`);
+        const medData = await fetchRes.json();
+        const currentStock = medData.data.stockQuantity;
+
+        if (currentStock < qty) {
+            showMsg('phaRes', false, `Only ${currentStock} units left in stock!`);
+            btn.disabled = false; btn.innerText = "Request Medication";
+            return;
+        }
+
+        const res = await fetch(`${GATEWAY_URL}/medicines/${medId}`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stockQuantity: currentStock - qty })
+        });
+
+        if (res.ok) {
+            showMsg('phaRes', true, `Order successfully placed for ${qty}x ${medName}.<br> Total: LKR ${total}.<br> Inventory automatically updated!`);
+            e.target.reset();
+            fetchMedicinesForDropdown(); // refresh stock counts
+        } else {
+            showMsg('phaRes', false, "Failed to process pharmacy order.");
+        }
+    } catch (err) {
+        showMsg('phaRes', false, "Network error: API Gateway unreachable.");
+    } finally {
+        btn.disabled = false; btn.innerText = "Request Medication";
+    }
+}
+
+// ------------------------------------
 // STATUS CHECK
 // ------------------------------------
 async function checkHealth() {
@@ -223,4 +293,5 @@ async function checkHealth() {
     checkRoute('doctors', 's-doc');
     checkRoute('appointments', 's-apt');
     checkRoute('bills', 's-bil');
+    checkRoute('medicines', 's-pha');
 }

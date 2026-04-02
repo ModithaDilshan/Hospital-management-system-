@@ -13,7 +13,8 @@ const services = {
     '/api/patients': process.env.PATIENT_SERVICE_URL || 'http://localhost:8001',
     '/api/doctors': process.env.DOCTOR_SERVICE_URL || 'http://localhost:8002',
     '/api/appointments': process.env.APPOINTMENT_SERVICE_URL || 'http://localhost:8003',
-    '/api/bills': process.env.BILLING_SERVICE_URL || 'http://localhost:8004'
+    '/api/bills': process.env.BILLING_SERVICE_URL || 'http://localhost:8004',
+    '/api/medicines': process.env.PHARMACY_SERVICE_URL || 'http://localhost:8005'
 };
 
 // Setup reverse proxies dynamically

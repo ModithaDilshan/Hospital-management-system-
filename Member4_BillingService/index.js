@@ -20,7 +20,10 @@ const swaggerOptions = {
             version: '1.0.0',
             description: 'Microservice handling hospital financial records',
         },
-        servers: [ { url: `http://localhost:${process.env.PORT}` } ]
+        servers: [
+            { url: `http://localhost:${process.env.PORT || 8004}`, description: 'Direct Microservice (Port 8004)' },
+            { url: `http://localhost:8000`, description: 'API Gateway (Port 8000)' }
+        ]
     },
     apis: ['./routes/*.js']
 };

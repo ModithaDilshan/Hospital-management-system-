@@ -21,6 +21,10 @@ This project fulfills the IT4020 Microservices Architecture assignment. It simul
 - Issues financial invoices for completed consultations and checks payment status.
 - Endpoints: `/api/bills`
 
+### **Member 5: Pharmacy Service (Port 8005)**
+- Manages hospital medicine inventory, stock quantities, and supplier records.
+- Endpoints: `/api/medicines`
+
 ## API Gateway (Port 8000)
 A central Node.js proxy server utilizing `http-proxy-middleware`. 
 Instead of tracking 4 different ports, the entire frontend only speaks to **Port 8000**. The Gateway seamlessly redirects `/api/doctors` traffic to `Port 8002` automatically.

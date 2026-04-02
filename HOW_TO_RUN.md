@@ -47,18 +47,22 @@ To prove to our lecturer that all CRUD capabilities are active, I built a dark-g
 
 1. Go to: **http://localhost:5000/admin.html**
 2. You will be greeted by a secure glassmorphism Admin Wall.
-3. Login using our shared database keys:
-   * **Username:** `hotelAdmin`
-   * **Password:** `Hotel2026`
-4. From here, click your specific Member tab on the left to add, delete, and manage the live database!
+3. LoginThe system routes traffic from `Port 8000` securely to internal services (`8001`, `8002`, `8003`, `8004`, `8005`).
+
+- **Patients:** `http://localhost:8000/api/patients`
+- **Doctors:** `http://localhost:8000/api/doctors`
+- **Appointments:** `http://localhost:8000/api/appointments`
+- **Bills:** `http://localhost:8000/api/bills`
+- **Pharmacy:** `http://localhost:8000/api/medicines`
 
 ---
 
-## 📑 5. Swagger Documentation (API Requirements)
-Every individual microservice has auto-generated Swagger documentation endpoints required by our assignment brief. You can access them individually:
-* Member 1 `Patients`: http://localhost:8001/api-docs
-* Member 2 `Doctors`: http://localhost:8002/api-docs
-* Member 3 `Appts`: http://localhost:8003/api-docs
-* Member 4 `Billing`: http://localhost:8004/api-docs
+### Phase 4: Native Microservice Documentation (Swagger UI)
+For your presentation, you must show the swagger documentation generated uniquely by each member's service. Navigate to these directly to capture your necessary screenshots:
+- Member 1: [http://localhost:8001/api-docs](http://localhost:8001/api-docs)
+- Member 2: [http://localhost:8002/api-docs](http://localhost:8002/api-docs)
+- Member 3: [http://localhost:8003/api-docs](http://localhost:8003/api-docs)
+- Member 4: [http://localhost:8004/api-docs](http://localhost:8004/api-docs)
+- Member 5: [http://localhost:8005/api-docs](http://localhost:8005/api-docs)
 
 Good luck running the demo! Let me know if you run into any issues.

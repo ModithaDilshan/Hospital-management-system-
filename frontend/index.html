@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grand City Hospital</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Montserrat:wght@500;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar">
@@ -22,10 +26,12 @@
     </nav>
 
     <!-- Hero Section -->
-    <header id="home" class="hero" style="background-image: linear-gradient(rgba(0, 31, 63, 0.7), rgba(0, 31, 63, 0.4)), url('images/hosp_hero.png');">
+    <header id="home" class="hero"
+        style="background-image: linear-gradient(rgba(0, 31, 63, 0.7), rgba(0, 31, 63, 0.4)), url('images/hosp_hero.png');">
         <div class="hero-content">
             <h1>Advanced Healthcare, Compassionate Care.</h1>
-            <p>Experience world-class medical services with our internationally certified doctors and state-of-the-art facilities.</p>
+            <p>Experience world-class medical services with our internationally certified doctors and state-of-the-art
+                facilities.</p>
             <div class="hero-buttons">
                 <a href="#appointments" class="btn-primary">Schedule a Visit</a>
             </div>
@@ -84,13 +90,14 @@
                 <form id="appointmentForm" onsubmit="submitAppointment(event)">
                     <div class="input-group">
                         <i class="fas fa-id-badge"></i>
-                        <input type="text" id="aptPatientId" placeholder="Your Registered Patient ID (Ex: 64a...)" required>
+                        <input type="text" id="aptPatientId" placeholder="Your Registered Patient ID (Ex: 64a...)"
+                            required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-user"></i>
                         <input type="text" id="aptPatientName" placeholder="Your Full Name" required>
                     </div>
-                    
+
                     <div class="input-group">
                         <i class="fas fa-stethoscope"></i>
                         <select id="aptDoctorSelect" required>
@@ -113,12 +120,12 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary full-width">Confirm Appointment</button>
                     <div id="aptRes" class="response-msg" style="display:none; margin-top:15px;"></div>
                 </form>
             </div>
-            
+
             <div class="billing-form-wrapper">
                 <h2><i class="fas fa-file-invoice-dollar"></i> Quick Billing / Payment</h2>
                 <p>Pay your hospital or consultation bills instantly.</p>
@@ -133,13 +140,14 @@
                     </div>
                     <div class="input-group">
                         <i class="fas fa-comment-medical"></i>
-                        <input type="text" id="billReason" placeholder="Description (Ex: Dr. Smith Consultation)" required>
+                        <input type="text" id="billReason" placeholder="Description (Ex: Dr. Smith Consultation)"
+                            required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-money-bill-wave"></i>
                         <input type="number" id="billAmount" placeholder="Amount (LKR)" required>
                     </div>
-                    
+
                     <div class="input-group">
                         <i class="fas fa-credit-card"></i>
                         <select id="billMethod" required>
@@ -148,9 +156,33 @@
                             <option value="Insurance">Insurance Claim</option>
                         </select>
                     </div>
-                    
+
                     <button type="submit" class="btn-success full-width">Process Payment</button>
                     <div id="billRes" class="response-msg" style="display:none; margin-top:15px;"></div>
+                </form>
+            </div>
+            <div class="pharmacy-form-wrapper" style="flex:1; min-width:350px;">
+                <h2><i class="fas fa-pills"></i> Pharmacy Order</h2>
+                <p>Request medication directly from our live pharmacy inventory.</p>
+                <form id="pharmacyForm" onsubmit="submitPharmacyOrder(event)">
+                    <div class="input-group">
+                        <i class="fas fa-id-badge"></i>
+                        <input type="text" id="phaPatientId" placeholder="Your Patient ID" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-capsules"></i>
+                        <select id="phaMedSelect" required>
+                            <option value="">-- Load Medicines First --</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-sort-numeric-up-alt"></i>
+                        <input type="number" id="phaMedQty" placeholder="Quantity Needed" required min="1">
+                    </div>
+
+                    <button type="submit" class="btn-primary full-width"
+                        style="background: linear-gradient(90deg, #8e44ad, #9b59b6);">Request Medication</button>
+                    <div id="phaRes" class="response-msg" style="display:none; margin-top:15px;"></div>
                 </form>
             </div>
         </div>
@@ -163,6 +195,7 @@
         <span class="status-indicator" id="s-doc">Doctors <span class="dot"></span></span>
         <span class="status-indicator" id="s-apt">Appointments <span class="dot"></span></span>
         <span class="status-indicator" id="s-bil">Billing <span class="dot"></span></span>
+        <span class="status-indicator" id="s-pha">Pharmacy <span class="dot"></span></span>
     </div>
 
     <!-- Modals -->
@@ -170,23 +203,36 @@
     <div id="registerModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('registerModal')">&times;</span>
-            <h2 style="color:var(--primary); font-family:'Montserrat';"><i class="fas fa-user-plus"></i> New Patient Registration</h2>
+            <h2 style="color:var(--primary); font-family:'Montserrat';"><i class="fas fa-user-plus"></i> New Patient
+                Registration</h2>
             <form id="registerForm" onsubmit="registerPatient(event)">
                 <input type="text" id="regName" placeholder="Full Name" required>
                 <div style="display:flex; gap:10px; margin-bottom:15px;">
                     <input type="number" id="regAge" placeholder="Age" required style="margin-bottom:0;">
-                    <select id="regGender" required style="margin-bottom:0; width:100%; padding:10px; border-radius:4px; border:1px solid #ccc;">
-                        <option value="">Gender</option><option>Male</option><option>Female</option><option>Other</option>
+                    <select id="regGender" required
+                        style="margin-bottom:0; width:100%; padding:10px; border-radius:4px; border:1px solid #ccc;">
+                        <option value="">Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
                     </select>
                 </div>
                 <div style="display:flex; gap:10px; margin-bottom:15px;">
                     <input type="text" id="regContact" placeholder="Phone Number" required style="margin-bottom:0;">
-                    <select id="regBlood" required style="margin-bottom:0; width:100%; padding:10px; border-radius:4px; border:1px solid #ccc;">
-                        <option value="">Blood Group</option><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>O-</option>
+                    <select id="regBlood" required
+                        style="margin-bottom:0; width:100%; padding:10px; border-radius:4px; border:1px solid #ccc;">
+                        <option value="">Blood Group</option>
+                        <option>A+</option>
+                        <option>B+</option>
+                        <option>O+</option>
+                        <option>AB+</option>
+                        <option>O-</option>
                     </select>
                 </div>
-                <textarea id="regAddress" placeholder="Home Address" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; margin-bottom:15px; font-family:inherit;"></textarea>
-                <button type="submit" class="btn-primary full-width" style="padding:15px; font-size:16px;">Register Profile</button>
+                <textarea id="regAddress" placeholder="Home Address" required
+                    style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; margin-bottom:15px; font-family:inherit;"></textarea>
+                <button type="submit" class="btn-primary full-width" style="padding:15px; font-size:16px;">Register
+                    Profile</button>
             </form>
             <div id="regResult" class="response-msg" style="display:none; margin-top:15px;"></div>
         </div>
@@ -194,4 +240,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
